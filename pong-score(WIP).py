@@ -1,7 +1,9 @@
 import pygame, sys 
 import random
 
-
+#Score System
+global p1Score
+global p2Score 
 
 #---------------------Collisons and ball movement------------------
 def ball_animation():
@@ -9,18 +11,19 @@ def ball_animation():
     ball.x += ball_speed_x
     ball.y += ball_speed_y
     
-    
+  
+  
     
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
     
     if ball.left <= 0 or ball.right >= screen_width:
         ball_restart()
-        if ball.left  >= 0:
-            p1Score += 1
+    if ball.left <= 0:
+        p1Score += 1
         
-        elif ball.right  >= screen_width:
-            p2Score += 1
+    if ball.right >= screen_width:
+        p2Score += 1
     
     
     
@@ -67,9 +70,7 @@ ball_speed_y = 7 * random.choice((1,-1))
 player_speed = 0 
 opponent_speed =7
 
-#Score System
-p1Score = 0
-p2Score = 0
+
 
 
 
