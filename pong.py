@@ -4,14 +4,27 @@ import random
 
 #---------------------Collisons and ball movement------------------
 def ball_animation():
-    global ball_speed_x, ball_speed_y
+    global ball_speed_x, ball_speed_y, p1Score, p2Score
     ball.x += ball_speed_x
     ball.y += ball_speed_y
     
+  
+  
+    
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
-    if ball.left <=0 or ball.right >= screen_width:
+    
+    if ball.left <= 0:
+        p1Score += 1
         ball_restart()
+    
+    if ball.right >= screen_width:
+        ball_restart()
+        p2Score += 1
+    
+    
+    
+    
         
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
@@ -55,7 +68,9 @@ ball_speed_y = 7 * random.choice((1,-1))
 player_speed = 0 
 opponent_speed =7
 
-
+#Score System
+p1Score = 0
+p2Score = 0
 
 
 
@@ -96,7 +111,7 @@ while True:
             if event.key == pygame.K_UP:
                 player_speed += 7
                 
-        
+    #function calls
     ball_animation()
     player_animation() 
     opponent_ai()
@@ -109,7 +124,12 @@ while True:
     pygame.draw.ellipse(screen, light_grey, ball)
     pygame.draw.aaline(screen, light_grey, (screen_width/2,0), (screen_width/2,screen_height))
     
-            
+    font = pygame.font.Font(None, 74) #use default font
+    text = font.render(str(p1Score), 1, (255, 255, 255))
+    screen.blit(text, (750, 10))
+    text = font.render(str(p2Score), 1, (255, 255, 255))
+    screen.blit(text, (500, 10))    
+        
     #updating the window
     pygame.display.flip()
     clock.tick(60)
