@@ -2,13 +2,14 @@ import pygame, sys
 import random
 
 
+
+
 #---------------------Collisons and ball movement------------------
 def ball_animation():
     global ball_speed_x, ball_speed_y, p1Score, p2Score
     ball.x += ball_speed_x
     ball.y += ball_speed_y
     
-  
   
     
     if ball.top <= 0 or ball.bottom >= screen_height:
@@ -22,16 +23,12 @@ def ball_animation():
         ball_restart()
         p2Score += 1
     
-    
-    
-    
+
         
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
+        bloop.play()
 #------------------------------------------------------------------
-
-
-
 
 
 
@@ -73,11 +70,16 @@ p1Score = 0
 p2Score = 0
 
 
+#sound
+pygame.mixer.init()
+bloop = pygame.mixer.Sound("ping_pong_8bit_beeep.ogg")
 
 
 # General set up
 pygame.init()
 clock = pygame.time.Clock()
+
+
 
 # Setting up the main window
 screen_width = 1280
